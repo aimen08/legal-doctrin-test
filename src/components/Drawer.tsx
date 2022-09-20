@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+import { CartItem } from './CartItem';
 import { Cart } from './icons/Cart';
 import { ItemCardProps } from './ItemCard';
 
@@ -9,7 +10,7 @@ export default function Drawer({
 }: {
   isOpen: boolean;
   drawerToggle: MouseEventHandler<HTMLButtonElement>;
-  children: ItemCardProps[] | undefined;
+  children: ItemCardProps[];
 }): any {
   {
     return (
@@ -32,8 +33,14 @@ export default function Drawer({
               <header className='p-4 font-bold text-3xl'>CART</header>
               <Cart />
             </div>
-
             {/* todo */}
+            <ul className='mx-4  divide-y-2 divide-gray-300'>
+              {children.map((item, index) => (
+                <li>
+                  <CartItem {...item} />
+                </li>
+              ))}
+            </ul>
           </article>
         </section>
         <section

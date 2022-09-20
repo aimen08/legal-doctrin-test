@@ -64,7 +64,7 @@ const Home: NextPage = () => {
         <Drawer
           isOpen={isOpen}
           drawerToggle={drawerToggle}
-          children={undefined}
+          children={items}
         ></Drawer>
       </main>
     </>
