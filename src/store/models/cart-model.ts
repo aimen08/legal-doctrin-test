@@ -6,7 +6,7 @@ import {
   computed,
   Computed,
 } from 'easy-peasy';
-import { applyMilkDiscount, existInArray } from '../../utils/helpers';
+import { existInArray } from '../../utils/helpers';
 
 interface Cart {
   name: string;
@@ -24,6 +24,7 @@ export interface CartModel {
   addItem: Action<this, Cart>;
   quantityMutate: Action<this, Cart>;
 }
+
 const model: CartModel = {
   data: [],
   subtotal: computed((state) => {
@@ -57,14 +58,33 @@ const model: CartModel = {
     (actions) => actions.quantityMutate,
     (state, target) => {
       state.data = state.data.map((element) => {
+        let quant = 0;
         if (element.name.includes('bread')) {
           let butter = state.data.find((item) => {
-            if (item.name.includes('Butter') && item.quantity >= 2) return true;
+            if (item.name.includes('Butter') && item.quantity >= 2) {
+              quant = item.quantity;
+              return true;
+            }
           });
           if (butter) {
             return {
               ...element,
-              totalPrice: element.price * element.quantity * 0.5,
+              totalPrice:
+                element.price * element.quantity -
+                element.price * Math.floor(quant / 2) * 0.5,
+            };
+          } else {
+            return { ...element, totalPrice: element.price * element.quantity };
+          }
+        }
+
+        if (element.name.includes('milk')) {
+          if (element.quantity / 4 >= 1) {
+            return {
+              ...element,
+              totalPrice:
+                element.price * element.quantity -
+                Math.floor(element.quantity / 4) * element.price,
             };
           } else {
             return { ...element, totalPrice: element.price * element.quantity };
@@ -81,7 +101,7 @@ const model: CartModel = {
           ...element,
           price: payload.price,
           quantity: payload.quantity,
-          totalPrice: applyMilkDiscount(payload),
+          totalPrice: payload.quantity * payload.price,
         };
       }
       return element;
