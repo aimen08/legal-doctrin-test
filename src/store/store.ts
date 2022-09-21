@@ -12,4 +12,7 @@ const model = {
   cart: cartModel,
 };
 
+/** we use easy peasy as state mangment check below link for more information
+ * https://easy-peasy.dev/
+ *  . */
 export const store = createStore(model);

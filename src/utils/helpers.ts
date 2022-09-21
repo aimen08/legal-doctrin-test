@@ -1,6 +1,9 @@
 import { number } from 'zod';
 import { ItemCartProps } from '../components/CartItem';
 
+/** This function returns formated Pound Price
+ *  @param {number} price - a number.
+ *  . */
 export function pricePoundFormat(price: number) {
   return new Intl.NumberFormat(
     'en-GB', // BCP 47 language tag
@@ -11,6 +14,10 @@ export function pricePoundFormat(price: number) {
   ).format(price);
 }
 
+/** This function checks if item exist in array
+ *  @param {ItemCartProps} data - array of items in cart
+ *  @param {string} name - name of item searching for.
+ *  . */
 export function existInArray(data: ItemCartProps[], name: string) {
   return data.some((element) => {
     if (element.name === name) {
