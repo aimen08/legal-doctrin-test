@@ -64,7 +64,7 @@ const model: CartModel = {
       state.data = state.data.map((element) => {
         let quant = 0;
         if (element.name.includes('bread')) {
-          let butter = state.data.find((item) => {
+          const butter = state.data.find((item) => {
             if (item.name.includes('Butter') && item.quantity >= 2) {
               quant = item.quantity;
               return true;
