@@ -1,3 +1,4 @@
+import { number } from 'zod';
 import { ItemCartProps } from '../components/CartItem';
 
 export function pricePoundFormat(price: number) {
@@ -17,4 +18,11 @@ export function existInArray(data: ItemCartProps[], name: string) {
     }
     return false;
   });
+}
+
+export function applyMilkDiscount(element: ItemCartProps): number {
+  // if (element.name.includes('milk')) {
+  // }
+
+  return element.quantity * element.price;
 }

@@ -1,5 +1,5 @@
 import { action, Action, computed, Computed } from 'easy-peasy';
-import { existInArray } from '../../utils/helpers';
+import { applyMilkDiscount, existInArray } from '../../utils/helpers';
 
 interface Cart {
   name: string;
@@ -21,7 +21,7 @@ const model: CartModel = {
   subtotal: computed((state) => {
     if (state.data.length > 0) {
       return state.data.reduce((accumulator, object) => {
-        return accumulator + object.price;
+        return accumulator + object.price * object.quantity;
       }, 0);
     }
     return 0;
@@ -45,7 +45,19 @@ const model: CartModel = {
       });
     }
   }),
-  quantityMutate: action((state, payload) => {}),
+  quantityMutate: action((state, payload) => {
+    state.data = state.data.map((element) => {
+      if (element.name === payload.name) {
+        return {
+          ...element,
+          price: payload.price,
+          quantity: payload.quantity,
+          totalPrice: applyMilkDiscount(payload),
+        };
+      }
+      return element;
+    });
+  }),
 };
 
 export default model;
