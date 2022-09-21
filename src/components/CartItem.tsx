@@ -9,6 +9,7 @@ export type ItemCartProps = {
   price: number;
   quantity: number;
   image: string;
+  totalPrice?: number;
 };
 
 export const CartItem = (item: ItemCartProps) => {
@@ -36,7 +37,7 @@ export const CartItem = (item: ItemCartProps) => {
         </section>
       </section>
       <h2 className='text-lg font-bold text-gray-700'>
-        {pricePoundFormat(item.price)}
+        {pricePoundFormat(item.totalPrice!!)}
       </h2>
     </div>
   );

@@ -1,5 +1,6 @@
 import { MouseEventHandler } from 'react';
 import { useStoreState } from '../store/hooks';
+import { pricePoundFormat } from '../utils/helpers';
 import { CartItem } from './CartItem';
 import { Cart } from './icons/Cart';
 import { ItemCardProps } from './ItemCard';
@@ -13,6 +14,8 @@ export default function Drawer({
 }): any {
   {
     const items = useStoreState((state) => state.cart.data);
+    const subTotal = useStoreState((state) => state.cart.subtotal);
+    const total = useStoreState((state) => state.cart.total);
     return (
       <main
         className={
@@ -44,11 +47,17 @@ export default function Drawer({
             <div className='border-t-2 border-gray-300 mx-4' />
             <div className='flex flex-col mx-4 items-end '>
               <h2 className='text-lg font-bold text-gray-600'>Subtotal</h2>
-              <h2 className='text-lg font-bold text-black mb-3'>1.0</h2>
+              <h2 className='text-lg font-bold text-black mb-3'>
+                {pricePoundFormat(subTotal)}
+              </h2>
               <h2 className='text-lg font-bold text-gray-600'>Discount</h2>
-              <h2 className='text-lg font-bold text-black mb-3'>1.0</h2>
+              <h2 className='text-lg font-bold text-black mb-3'>
+                {pricePoundFormat(subTotal - total)}
+              </h2>
               <h2 className='text-lg font-bold text-gray-600'>Total</h2>
-              <h2 className='text-lg font-bold text-black mb-3'>1.0</h2>
+              <h2 className='text-lg font-bold text-black mb-3'>
+                {pricePoundFormat(total)}
+              </h2>
             </div>
           </article>
         </section>
