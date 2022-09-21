@@ -16,6 +16,8 @@ interface Cart {
   quantity: number;
 }
 
+// this is where all the requsesed business logic happen
+
 export interface CartModel {
   data: Cart[];
   subtotal: Computed<this, number>;
@@ -43,6 +45,7 @@ const model: CartModel = {
     }
     return 0;
   }),
+  // this action gets called when item is added to cart
   addItem: action((state, payload) => {
     if (!existInArray(state.data, payload.name)) {
       state.data.push({
@@ -54,6 +57,7 @@ const model: CartModel = {
       });
     }
   }),
+  // this action gets called every time there is possibility of discount either in milk or bread
   discounted: actionOn(
     (actions) => actions.quantityMutate,
     (state, target) => {
@@ -94,6 +98,7 @@ const model: CartModel = {
       });
     }
   ),
+  // this action gets called every time the user INC or DEC one of the items in the cart
   quantityMutate: action((state, payload) => {
     state.data = state.data.map((element) => {
       if (element.name === payload.name) {
