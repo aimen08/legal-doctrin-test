@@ -1,4 +1,11 @@
-import { action, Action, computed, Computed } from 'easy-peasy';
+import {
+  action,
+  Action,
+  actionOn,
+  ActionOn,
+  computed,
+  Computed,
+} from 'easy-peasy';
 import { applyMilkDiscount, existInArray } from '../../utils/helpers';
 
 interface Cart {
@@ -13,6 +20,7 @@ export interface CartModel {
   data: Cart[];
   subtotal: Computed<this, number>;
   total: Computed<this, number>;
+  discounted: ActionOn<this>;
   addItem: Action<this, Cart>;
   quantityMutate: Action<this, Cart>;
 }
@@ -45,6 +53,27 @@ const model: CartModel = {
       });
     }
   }),
+  discounted: actionOn(
+    (actions) => actions.quantityMutate,
+    (state, target) => {
+      state.data = state.data.map((element) => {
+        if (element.name.includes('bread')) {
+          let butter = state.data.find((item) => {
+            if (item.name.includes('Butter') && item.quantity >= 2) return true;
+          });
+          if (butter) {
+            return {
+              ...element,
+              totalPrice: element.price * element.quantity * 0.5,
+            };
+          } else {
+            return { ...element, totalPrice: element.price * element.quantity };
+          }
+        }
+        return element;
+      });
+    }
+  ),
   quantityMutate: action((state, payload) => {
     state.data = state.data.map((element) => {
       if (element.name === payload.name) {
