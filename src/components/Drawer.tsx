@@ -1,18 +1,18 @@
 import { MouseEventHandler } from 'react';
+import { useStoreState } from '../store/hooks';
 import { CartItem } from './CartItem';
 import { Cart } from './icons/Cart';
 import { ItemCardProps } from './ItemCard';
 
 export default function Drawer({
-  children,
   isOpen,
   drawerToggle,
 }: {
   isOpen: boolean;
   drawerToggle: MouseEventHandler<HTMLButtonElement>;
-  children: ItemCardProps[];
 }): any {
   {
+    const items = useStoreState((state) => state.cart.data);
     return (
       <main
         className={
@@ -28,19 +28,28 @@ export default function Drawer({
             (isOpen ? ' translate-x-0 ' : ' translate-x-full ')
           }
         >
-          <article className='relative w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full'>
+          <article className='relative  w-screen max-w-lg pb-10 flex flex-col space-y-6 overflow-y-scroll h-full'>
             <div className='flex flex-row items-center m-10'>
               <header className='p-4 font-bold text-3xl'>CART</header>
               <Cart />
             </div>
-            {/* todo */}
+
             <ul className='mx-4  divide-y-2 divide-gray-300'>
-              {children.map((item, index) => (
-                <li>
+              {items.map((item, index) => (
+                <li key={index}>
                   <CartItem {...item} />
                 </li>
               ))}
             </ul>
+            <div className='border-t-2 border-gray-300 mx-4' />
+            <div className='flex flex-col mx-4 items-end '>
+              <h2 className='text-lg font-bold text-gray-600'>Subtotal</h2>
+              <h2 className='text-lg font-bold text-black mb-3'>1.0</h2>
+              <h2 className='text-lg font-bold text-gray-600'>Discount</h2>
+              <h2 className='text-lg font-bold text-black mb-3'>1.0</h2>
+              <h2 className='text-lg font-bold text-gray-600'>Total</h2>
+              <h2 className='text-lg font-bold text-black mb-3'>1.0</h2>
+            </div>
           </article>
         </section>
         <section

@@ -3,38 +3,16 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { CartButton } from '../components/CartButton';
 import Drawer from '../components/Drawer';
-import { ItemCard, ItemCardProps } from '../components/ItemCard';
+import { ItemCard } from '../components/ItemCard';
+import { useStoreState } from '../store/hooks';
 
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const items = useStoreState((state) => state.items.data);
 
   const drawerToggle = () => {
     setIsOpen(!isOpen);
   };
-  const items: ItemCardProps[] = [
-    {
-      name: 'Whole french bread',
-      description: 'made in paris and destinated to the whole world',
-      price: 1.0,
-      rating: 4,
-      image: '/bread.png',
-    },
-    {
-      name: 'Fresh Suiss milk',
-      description:
-        'semi skimmed milk that comes straight from the alpes farmers',
-      price: 1.15,
-      rating: 4,
-      image: '/milk.png',
-    },
-    {
-      name: 'Butter',
-      description: 'produced by us to insure high quality butter',
-      price: 0.8,
-      rating: 4,
-      image: '/butter.png',
-    },
-  ];
 
   return (
     <>
@@ -55,17 +33,13 @@ const Home: NextPage = () => {
           <ul>
             {items.map((item, index): any => (
               <li key={index}>
-                <ItemCard {...item} />
+                <ItemCard item={item} />
               </li>
             ))}
           </ul>
         </div>
 
-        <Drawer
-          isOpen={isOpen}
-          drawerToggle={drawerToggle}
-          children={items}
-        ></Drawer>
+        <Drawer isOpen={isOpen} drawerToggle={drawerToggle}></Drawer>
       </main>
     </>
   );

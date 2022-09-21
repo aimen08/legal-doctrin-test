@@ -4,7 +4,14 @@ import { pricePoundFormat } from '../utils/helpers';
 import { useState } from 'react';
 import { Counter } from './Counter';
 
-export const CartItem = (item: ItemCardProps) => {
+export type ItemCartProps = {
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+};
+
+export const CartItem = (item: ItemCartProps) => {
   const [quality, setQuntity] = useState(1);
 
   return (
