@@ -29,7 +29,7 @@ const model: CartModel = {
   total: computed((state) => {
     if (state.data.length > 0) {
       return state.data.reduce((accumulator, object) => {
-        return accumulator + object.totalPrice!!;
+        return accumulator + object.totalPrice!;
       }, 0);
     }
     return 0;

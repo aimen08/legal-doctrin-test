@@ -58,7 +58,7 @@ export const CartItem = (item: ItemCartProps) => {
         </section>
       </section>
       <h2 className='text-lg font-bold text-gray-700'>
-        {pricePoundFormat(item.totalPrice!!)}
+        {pricePoundFormat(item.totalPrice!)}
       </h2>
     </div>
   );
