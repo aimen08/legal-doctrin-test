@@ -57,9 +57,16 @@ export const CartItem = (item: ItemCartProps) => {
           </section>
         </section>
       </section>
-      <h2 className='text-lg font-bold text-gray-700'>
-        {pricePoundFormat(item.totalPrice!)}
-      </h2>
+      <div>
+        {item.price * item.quantity !== item.totalPrice! ? (
+          <h2 className='text-lg font-bold text-red-700 line-through'>
+            {pricePoundFormat(item.price * item.quantity)}
+          </h2>
+        ) : null}
+        <h2 className='text-lg font-bold text-gray-700'>
+          {pricePoundFormat(item.totalPrice!)}
+        </h2>
+      </div>
     </div>
   );
 };
