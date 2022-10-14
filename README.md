@@ -57,6 +57,3 @@ _Demo_ : *https://legal-doctrin-test.vercel.app/*
     - 📂 **utils** (helper functions)
       - 📄 [helpers.ts](src/utils/helpers.ts)
 
-## PS:
-
-_this repo will become private after a week from 21/09/2022_
